@@ -1,0 +1,70 @@
+<html lang="en">
+    {% load static %}
+    {% load hora_atual %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Gerenciador de Funcionários{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="{% static 'website/css/master.css' %}"> -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+    {% block styles %}{% endblock %}
+</head>
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'website:index' %}">
+            <img src="{% static 'website/img/favicon.png' %}" height='45px'>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#conteudo-navbar" aria-controls="conteudo-navbar"
+                aria-expanded="false" aria-label="Ativar navegação">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="conteudo-navbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'website:index' %}">
+                    Página Inicial
+                    </a>
+                </li>
+                {% if not user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'website:registrar' %}">Registrar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'website:login' %}">Login</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'website:lista_funcionarios' %}">
+                    Funcionários
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'website:logout' %}">Logout</a>
+                </li>
+            </ul>
+            {% endif %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <p class="navbar-text">{{ user.username|upper }}</p>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    {% block conteudo %}{% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    {% block scripts %}{% endblock %}
+
+    <!-- <script src="{% static 'website/js/scripts.js' %}"></script> -->
+</body>
+</html>
